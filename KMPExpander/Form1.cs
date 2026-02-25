@@ -351,6 +351,7 @@ namespace KMPExpander
             saveAsToolStripMenuItem.Enabled = true;
             saveToolStripMenuItem.Enabled = true;
             exportXMLToolStripMenuItem.Enabled = true;
+            exportMKWJSONToolStripMenuItem.Enabled = true;
         }
 
         private void closeKMPStripMenuItem6_Click(object sender, EventArgs e)
@@ -359,6 +360,7 @@ namespace KMPExpander
             saveToolStripMenuItem.Enabled = false;
             saveAsToolStripMenuItem.Enabled = false;
             exportXMLToolStripMenuItem.Enabled = false;
+            exportMKWJSONToolStripMenuItem.Enabled = false;
             (sender as ToolStripMenuItem).Enabled = false;
             Render();
             populateTreeView();
@@ -388,6 +390,13 @@ namespace KMPExpander
         }
 
         private void saveKMP()
+        {
+            File.WriteAllBytes(kmp_path, Kayempee.Write());
+            Text = "KMP Expander (" + kmp_path + ")";
+            toolStripStatusLabel1.Text = "Saved successfully";
+        }
+
+        private void saveWiiKMP()
         {
             File.WriteAllBytes(kmp_path, Kayempee.Write());
             Text = "KMP Expander (" + kmp_path + ")";
@@ -432,6 +441,7 @@ namespace KMPExpander
                     dataGridView1.DataSource = null;
                     saveAsToolStripMenuItem.Enabled = true;
                     exportXMLToolStripMenuItem.Enabled = true;
+                    exportMKWJSONToolStripMenuItem.Enabled = true;
                     closeKMPStripMenuItem6.Enabled = true;
                     Render();
                 }
@@ -445,6 +455,17 @@ namespace KMPExpander
         private void saveFileDialogXML_FileOk(object sender, CancelEventArgs e)
         {
             File.WriteAllBytes(saveFileDialogXML.FileName, Kayempee.WriteXML());
+            toolStripStatusLabel1.Text = "Exported successfully";
+        }
+
+        private void exportMKWJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialogMKWJSON.ShowDialog();
+        }
+
+        private void saveFileDialogMKWJSON_FileOk(object sender, CancelEventArgs e)
+        {
+            File.WriteAllBytes(saveFileDialogMKWJSON.FileName, Kayempee.WriteMKWKMPJSON());
             toolStripStatusLabel1.Text = "Exported successfully";
         }
 

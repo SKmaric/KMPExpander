@@ -61,6 +61,7 @@
             this.routesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.areaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportMKWJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,6 +126,7 @@
             this.saveFileDialogKMP = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogXML = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogXML = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialogMKWJSON = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStripGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -324,7 +326,8 @@
             // 
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportXMLToolStripMenuItem,
-            this.exportCSVToolStripMenuItem});
+            this.exportCSVToolStripMenuItem,
+            this.exportMKWJSONToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.exportToolStripMenuItem.Text = "Export";
@@ -414,6 +417,14 @@
             this.cameraSettingsToolStripMenuItem.Name = "cameraSettingsToolStripMenuItem";
             this.cameraSettingsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.cameraSettingsToolStripMenuItem.Text = "Camera Settings";
+            // 
+            // exportMKWJSONToolStripMenuItem
+            // 
+            this.exportMKWJSONToolStripMenuItem.Enabled = false;
+            this.exportMKWJSONToolStripMenuItem.Name = "exportMKWJSONToolStripMenuItem";
+            this.exportMKWJSONToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMKWJSONToolStripMenuItem.Text = "Export MKW JSON";
+            this.exportMKWJSONToolStripMenuItem.Click += new System.EventHandler(this.exportMKWJSONToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -1019,6 +1030,12 @@
             this.openFileDialogXML.Filter = "eXtendible Markup Language|*.xml|All Files|*.*";
             this.openFileDialogXML.Title = "Import XML";
             // 
+            // saveFileDialogMKWJSON
+            // 
+            this.saveFileDialogMKWJSON.Filter = "Mario Kart Wii KMP JSON|*.kmp.json";
+            this.saveFileDialogMKWJSON.Title = "Export as MKW JSON";
+            this.saveFileDialogMKWJSON.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialogMKWJSON_FileOk);
+            //
             // contextMenuStripGroup
             // 
             this.contextMenuStripGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1206,6 +1223,8 @@
         private System.Windows.Forms.ToolStripMenuItem cameraSettingsToolStripMenuItem1;
         private System.Windows.Forms.SaveFileDialog saveFileDialogXML;
         private System.Windows.Forms.OpenFileDialog openFileDialogXML;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogMKWJSON;
+        private System.Windows.Forms.ToolStripMenuItem exportMKWJSONToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         public System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;

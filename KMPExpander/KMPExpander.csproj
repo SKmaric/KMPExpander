@@ -63,7 +63,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Internet</TargetZone>
@@ -74,6 +74,9 @@
   <ItemGroup>
     <Reference Include="LibEndianBinaryIO">
       <HintPath>.\LibEndianBinaryIO.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -104,6 +107,7 @@
     <Compile Include="Class\EndianBinaryReaderExtensions.cs" />
     <Compile Include="Class\Extensions.cs" />
     <Compile Include="Class\KMP.cs" />
+    <Compile Include="Class\KMPMKWExport.cs" />
     <Compile Include="Class\KMPs\AREA.cs" />
     <Compile Include="Class\KMPs\CAME.cs" />
     <Compile Include="Class\KMPs\CKPH.cs" />
@@ -223,6 +227,7 @@
       <DependentUpon>TestFormOBJ.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="KMPExpander_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

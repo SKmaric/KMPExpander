@@ -17,7 +17,7 @@ namespace KMPExpander.Class
     {
         private static readonly bool skipUnknownObjs = true;
 
-        private static readonly float mapScale = 1f;
+        private static readonly float mapScale = 10f;
         private static readonly float cameraFovScale = 1f;
 
         private static readonly Dictionary<Byte, string> CameraTypesDict
@@ -96,7 +96,7 @@ namespace KMPExpander.Class
             //{ 0x0074, "itembox" }, // DkAirship / Tiki Tak Blimp
             //{ 0x0075, "itembox" }, // AcBowserShip / Bowser Blimp
             //{ 0x0076, "itembox" }, // AcFutureClown / Koopa Clown Car
-            //{ 0x0077, "itembox" }, // CmnCar1 / Single Car
+            { 0x0077, "car_body" }, // CmnCar1 / Single Car
             //{ 0x0078, "itembox" }, // StPotSnake / Unused Pot With Snake
             { 0x0079, "DKrockGC" }, // CmnRock1 / Boulder Duplicate
             { 0x007A, "CarA3" }, // WiiCarA / Parking Car Variant A Duplicate
@@ -127,7 +127,7 @@ namespace KMPExpander.Class
             { 0x00DC, "puchi_pakkun" }, // packunFlower / Piranha Plant
             //{ 0x00DD, "itembox" }, // note / Bouncing Note
             //{ 0x00DE, "itembox" }, // bee / Stingby
-            //{ 0x00DF, "itembox" }, // fishBone / Fish Bone
+            { 0x00DF, "pukupuku" }, // fishBone / Fish Bone
             { 0x00E0, "cow" }, // goat / Goat
             { 0x00E1, "pakkun_f" }, // packunMusic / Music Piranha Plant
             //{ 0x012D, "itembox" }, // Start / Start Grid
@@ -170,7 +170,7 @@ namespace KMPExpander.Class
             //{ 0x015E, "itembox" }, // CmnPylon / Yellow Traffic Cone
             //{ 0x015F, "itembox" }, // CmnTree5 / Tree Variant 5
             //{ 0x0160, "itembox" }, // WaterBox / Local Underwater Zone
-            //{ 0x0161, "itembox" }, // GcTree1 / GC Tree
+            { 0x0161, "donkytree1GC" }, // GcTree1 / GC Tree
             { 0x0162, "tree_cannon" }, // WiiCannon / Barrel Cannon
             { 0x0165, "oilSFC" }, // SfcOil / Oil Puddle
             //{ 0x0166, "itembox" }, // BumpingFlower / Buncy Flower
@@ -216,7 +216,7 @@ namespace KMPExpander.Class
             //{ 0x0190, "itembox" }, // TcBalloon / Toad Balloon
             { 0x0191, "kinoko_ud" }, // MpTambourine / Bouncy Tambourine
             //{ 0x0192, "itembox" }, // BdBoard / Big Donut Glider Board
-            //{ 0x0193, "itembox" }, // RrAsteroid / Asteroid
+            { 0x0193, "InsekiA" }, // RrAsteroid / Asteroid
             //{ 0x0194, "itembox" }, // UgTreeS / Unused Small Tree
             //{ 0x0195, "itembox" }, // UgTreeL / Unused Large Tree
             //{ 0x0196, "itembox" }, // UgCloud / 8-bit Cloud
@@ -228,19 +228,19 @@ namespace KMPExpander.Class
             //{ 0x019C, "itembox" }, // SfcMovingRoad / Unused Retro Moving Rainbow Road
             //{ 0x019D, "itembox" }, // SfcMovingRoad / Unused Retro Moving Rainbow Road
             //{ 0x019E, "itembox" }, // SfcMovingRoad / Unused Retro Moving Rainbow Road
-            //{ 0x019F, "itembox" }, // CmnCar1 / Car Group
+            { 0x019F, "car_body" }, // CmnCar1 / Car Group
             //{ 0x01A0, "itembox" }, // noteJumpbox / Bouncy Note Jump Box
             //{ 0x01A1, "itembox" }, // VisualSync / Music Visual Sync Handler
             //{ 0x01A2, "itembox" }, // MpTrumpet / Trumpet
             //{ 0x01A3, "itembox" }, // MpSax / Sax
             //{ 0x01A4, "itembox" }, // MpSpeaker / Speaker
             { 0x01A5, "kinoko_ud" }, // RrJump / Rainbow Mushroom
-            //{ 0x01A6, "itembox" }, // SunBig / Big Sun
+            { 0x01A6, "sun" }, // SunBig / Big Sun
             { 0x01A7, "dokan_sfc" }, // CmnDokan2 / SNES Pipe
             //{ 0x01A8, "itembox" }, // packunLight / Music Piranha Plant Light
             //{ 0x01A9, "itembox" }, // GbaBoard / GBA Bowser Castle Glide Board
             //{ 0x01AA, "itembox" }, // MpBoard / Music Glider Ramp
-            //{ 0x01AB, "itembox" }, // Sunset / Sunset Sun
+            { 0x01AB, "sun" }, // Sunset / Sunset Sun
             //{ 0x01AC, "itembox" }, // WaterBoxNoRot / Local Underwater Zone Without Rotation
             //{ 0x01AD, "itembox" }, // MoonBoxNoRot / Moon Gravity Zone Without Rotation
             //{ 0x01AE, "itembox" }, // SfcJumpBar / SNES Bouncy Bar
@@ -323,7 +323,7 @@ namespace KMPExpander.Class
                                     writer.WriteValue(0);
 
                                     writer.WritePropertyName("position");
-                                    SerializeVector3(writer, entry.Pos);
+                                    SerializeVector3(writer, entry.Pos * mapScale);
 
                                     writer.WritePropertyName("rotation");
                                     SerializeVector3(writer, new Vector3(entry.RotationX,
@@ -345,7 +345,7 @@ namespace KMPExpander.Class
                                 writer.WriteValue(i);
 
                                 writer.WritePropertyName("position");
-                                SerializeVector3(writer, StartPositions.Entries[i].Pos);
+                                SerializeVector3(writer, StartPositions.Entries[i].Pos * mapScale);
 
                                 writer.WritePropertyName("rotation");
                                 SerializeVector3(writer, new Vector3(StartPositions.Entries[i].RotationX,
@@ -413,18 +413,18 @@ namespace KMPExpander.Class
                                     writer.WriteStartObject();
 
                                     writer.WritePropertyName("deviation");
-                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].Scale);
+                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].Scale * mapScale);
 
                                     writer.WritePropertyName("param");
                                     writer.WriteStartArray();
-                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].MushSettingsVal);
-                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].DriftSettingsVal);
                                     writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].ToENPTEntry().Unknown2);
-                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].ToENPTEntry().Unknown3);
+                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].MushSettingsVal < 2 ? EnemyRoutes.Entries[i].Entries[j].MushSettingsVal : 0);
+                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].DriftSettingsVal);
+                                    writer.WriteValue(EnemyRoutes.Entries[i].Entries[j].MushSettingsVal == 2 ? 128 : 0);
                                     writer.WriteEndArray();
 
                                     writer.WritePropertyName("position");
-                                    SerializeVector3(writer, EnemyRoutes.Entries[i].Entries[j].Pos);
+                                    SerializeVector3(writer, EnemyRoutes.Entries[i].Entries[j].Pos * mapScale);
 
                                     writer.WriteEndObject();
                                     pointCount++;
@@ -499,7 +499,7 @@ namespace KMPExpander.Class
                                     writer.WriteStartObject();
 
                                     writer.WritePropertyName("deviation");
-                                    writer.WriteValue(ItemRoutes.Entries[i].Entries[j].Scale);
+                                    writer.WriteValue(ItemRoutes.Entries[i].Entries[j].Scale * mapScale);
 
                                     writer.WritePropertyName("param");
                                     writer.WriteStartArray();
@@ -510,7 +510,7 @@ namespace KMPExpander.Class
                                     writer.WriteEndArray();
 
                                     writer.WritePropertyName("position");
-                                    SerializeVector3(writer, ItemRoutes.Entries[i].Entries[j].Pos);
+                                    SerializeVector3(writer, ItemRoutes.Entries[i].Entries[j].Pos * mapScale);
 
                                     writer.WriteEndObject();
                                     pointCount++;
@@ -588,13 +588,13 @@ namespace KMPExpander.Class
                                     writer.WriteValue(CheckPointPaths.Entries[i].Entries[j].Key);
 
                                     writer.WritePropertyName("mLeft");
-                                    SerializeVector2(writer, new Vector2 (CheckPointPaths.Entries[i].Entries[j].LeftPointX, CheckPointPaths.Entries[i].Entries[j].LeftPointZ));
+                                    SerializeVector2(writer, new Vector2 (CheckPointPaths.Entries[i].Entries[j].LeftPointX * mapScale, CheckPointPaths.Entries[i].Entries[j].LeftPointZ * mapScale));
 
                                     writer.WritePropertyName("mRespawnIndex");
                                     writer.WriteValue(CheckPointPaths.Entries[i].Entries[j].RespawnId);
 
                                     writer.WritePropertyName("mRight");
-                                    SerializeVector2(writer, new Vector2(CheckPointPaths.Entries[i].Entries[j].RightPointX, CheckPointPaths.Entries[i].Entries[j].RightPointZ));
+                                    SerializeVector2(writer, new Vector2(CheckPointPaths.Entries[i].Entries[j].RightPointX * mapScale, CheckPointPaths.Entries[i].Entries[j].RightPointZ * mapScale));
 
                                     writer.WriteEndObject();
 
@@ -621,7 +621,7 @@ namespace KMPExpander.Class
                                 writer.WriteStartObject();
 
                                 writer.WritePropertyName("interpolation");
-                                writer.WriteValue(Convert.ToInt32(Routes.Entries[i].Smooth));
+                                writer.WriteValue(Routes.Entries[i].Entries.Count > 2 ? Convert.ToInt32(Routes.Entries[i].Smooth) : 0);
 
                                 writer.WritePropertyName("loopPolicy");
                                 writer.WriteValue(Convert.ToInt32(Routes.Entries[i].Loop));
@@ -635,12 +635,12 @@ namespace KMPExpander.Class
 
                                     writer.WritePropertyName("params");
                                     writer.WriteStartArray();
-                                    writer.WriteValue(Routes.Entries[i].Entries[j].Speed);
+                                    writer.WriteValue(Routes.Entries[i].Entries[j].Speed * 0.1);
                                     writer.WriteValue(Routes.Entries[i].Entries[j].Setting2);
                                     writer.WriteEndArray();
 
                                     writer.WritePropertyName("position");
-                                    SerializeVector3(writer, Routes.Entries[i].Entries[j].Pos);
+                                    SerializeVector3(writer, Routes.Entries[i].Entries[j].Pos * mapScale);
 
                                     writer.WriteEndObject();
                                 }
@@ -675,7 +675,7 @@ namespace KMPExpander.Class
                                 writer.WriteValue(MapObjects.Entries[i].RouteID);
 
                                 writer.WritePropertyName("position");
-                                SerializeVector3(writer, MapObjects.Entries[i].Pos);
+                                SerializeVector3(writer, MapObjects.Entries[i].Pos * mapScale);
 
                                 writer.WritePropertyName("rotation");
                                 SerializeVector3(writer, new Vector3(MapObjects.Entries[i].RotationX,
@@ -718,13 +718,13 @@ namespace KMPExpander.Class
                                 writer.WritePropertyName("mModel");
                                 writer.WriteStartObject();
                                 writer.WritePropertyName("mPosition");
-                                SerializeVector3(writer, Areas.Entries[i].Pos);
+                                SerializeVector3(writer, Areas.Entries[i].Pos * mapScale);
                                 writer.WritePropertyName("mRotation");
                                 SerializeVector3(writer, new Vector3(Areas.Entries[i].RotationX,
                                     Areas.Entries[i].RotationY, Areas.Entries[i].RotationZ));
                                 writer.WritePropertyName("mScaling");
-                                SerializeVector3(writer, new Vector3(Areas.Entries[i].ScaleX,
-                                    Areas.Entries[i].ScaleY, Areas.Entries[i].ScaleZ));
+                                SerializeVector3(writer, new Vector3(Areas.Entries[i].ScaleX * 0.1f * mapScale,
+                                    Areas.Entries[i].ScaleY * 0.1f * mapScale, Areas.Entries[i].ScaleZ * 0.1f * mapScale));
                                 writer.WritePropertyName("mShape");
                                 writer.WriteValue(Areas.Entries[i].ShapeMode == 1 ? "Cylinder" : "Box");
                                 writer.WriteEndObject();
@@ -788,7 +788,7 @@ namespace KMPExpander.Class
                                 writer.WriteValue(Cameras.Entries[i].PointSpeed);
 
                                 writer.WritePropertyName("mPosition");
-                                SerializeVector3(writer, Cameras.Entries[i].Pos);
+                                SerializeVector3(writer, Cameras.Entries[i].Pos * mapScale);
 
                                 writer.WritePropertyName("mRotation");
                                 SerializeVector3(writer, new Vector3(Cameras.Entries[i].RotationX,
@@ -805,14 +805,20 @@ namespace KMPExpander.Class
 
                                 writer.WritePropertyName("mView");
                                 writer.WriteStartObject();
+
+                                float viewpointScale = 1f;
+
+                                if (Cameras.Entries[i].TypeID == 4 || Cameras.Entries[i].TypeID == 5)
+                                    viewpointScale = mapScale;
+
                                 writer.WritePropertyName("from");
-                                SerializeVector3(writer, new Vector3(Cameras.Entries[i].Viewpoint1X,
-                                    Cameras.Entries[i].Viewpoint1Y, Cameras.Entries[i].Viewpoint1Z));
+                                SerializeVector3(writer, new Vector3(Cameras.Entries[i].Viewpoint1X * viewpointScale,
+                                    Cameras.Entries[i].Viewpoint1Y * viewpointScale, Cameras.Entries[i].Viewpoint1Z * viewpointScale));
                                 writer.WritePropertyName("mSpeed");
-                                writer.WriteValue(Cameras.Entries[i].ViewpointSpeed);
+                                writer.WriteValue(Cameras.Entries[i].ViewpointSpeed * viewpointScale);
                                 writer.WritePropertyName("to");
-                                SerializeVector3(writer, new Vector3(Cameras.Entries[i].Viewpoint2X,
-                                    Cameras.Entries[i].Viewpoint2Y, Cameras.Entries[i].Viewpoint2Z));
+                                SerializeVector3(writer, new Vector3(Cameras.Entries[i].Viewpoint2X * viewpointScale,
+                                    Cameras.Entries[i].Viewpoint2Y * viewpointScale, Cameras.Entries[i].Viewpoint2Z * viewpointScale));
                                 writer.WriteEndObject();
 
                                 writer.WriteEndObject();
@@ -831,7 +837,7 @@ namespace KMPExpander.Class
                                 writer.WriteValue(i);
 
                                 writer.WritePropertyName("position");
-                                SerializeVector3(writer, RespawnPoints.Entries[i].Pos);
+                                SerializeVector3(writer, RespawnPoints.Entries[i].Pos * mapScale);
 
                                 writer.WritePropertyName("range");
                                 writer.WriteValue(-1);
@@ -853,7 +859,7 @@ namespace KMPExpander.Class
                                 writer.WriteStartObject();
 
                                 writer.WritePropertyName("mPosition");
-                                SerializeVector3(writer, CannonPoints.Entries[i].Entries.Last().Pos);
+                                SerializeVector3(writer, CannonPoints.Entries[i].Entries.Last().Pos * mapScale);
 
                                 writer.WritePropertyName("mRotation");
                                 SerializeVector3(writer, new Vector3()); // todo: maybe try working this out idk
